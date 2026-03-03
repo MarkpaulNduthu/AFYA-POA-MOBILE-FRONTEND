@@ -14,6 +14,6 @@ class LoginViewModelFactory(
         if(modelClass.isAssignableFrom(LoginScreenViewModel::class.java)) {
             return LoginScreenViewModel(apiImplementation) as T
         }
-        throw IllegalArgumentException("Unknown Model Class")
+        throw IllegalArgumentException("Error creating Login view model in factory")
     }
 }

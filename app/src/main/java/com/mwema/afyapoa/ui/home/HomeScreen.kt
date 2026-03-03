@@ -27,16 +27,5 @@ fun HomeScreen(
     ){
         val tokenManager = (LocalContext.current.applicationContext as AfyaPoa).tokenManager
         Text(text="Welcome to Home page")
-        Button(
-            onClick = {
-                tokenManager.clear()
-                onNavigate(Routes.LOGIN)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red
-            )
-        ) {
-            Text("LOGOUT", color = Color.White, style = MaterialTheme.typography.bodyLarge)
-        }
     }
 }

@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import androidx.navigation.compose.rememberNavController
+import com.mwema.afyapoa.ui.MainScreen
 import com.mwema.afyapoa.ui.home.HomeScreen
 import com.mwema.afyapoa.ui.login.LoginScreen
 import com.mwema.afyapoa.ui.signup.SignUPScreen
@@ -26,29 +27,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AfyaPoaTheme {
-                Scaffold { innerPadding ->
-                    val navController = rememberNavController()
-                    val applicationContext = LocalContext.current.applicationContext as AfyaPoa
-                    NavHost(
-                        navController = navController,
-                        startDestination = applicationContext.tokenManager.getToken()?.let {
-                            Routes.HOME
-                        }?: Routes.LOGIN
-                    ) {
-                        composable(route = Routes.LOGIN) {
-                            LoginScreen(modifier = Modifier.padding(innerPadding)) {
-                                navController.navigate(it)
-                            }
+                val navController = rememberNavController()
+                val applicationContext = LocalContext.current.applicationContext as AfyaPoa
+                NavHost(
+                    navController = navController,
+                    startDestination = applicationContext.tokenManager.getToken()?.let {
+                        Routes.MAINSCREEN
+                    } ?: Routes.LOGIN
+                ) {
+                    composable(route = Routes.LOGIN) {
+                        LoginScreen(modifier = Modifier) {
+                            navController.navigate(it)
                         }
-                        composable(route = Routes.HOME) {
-                            HomeScreen(modifier = Modifier.padding(innerPadding)){
-                                navController.navigate(it)
-                            }
+                    }
+                    composable(route = Routes.MAINSCREEN) {
+                        MainScreen(){
+                            navController.navigate(it)
                         }
-                        composable(Routes.SIGNUP) {
-                            SignUPScreen(Modifier.padding(innerPadding)) {
-                                navController.navigate(it)
-                            }
+                    }
+                    composable(Routes.SIGNUP) {
+                        SignUPScreen(Modifier) {
+                            navController.navigate(it)
                         }
                     }
                 }

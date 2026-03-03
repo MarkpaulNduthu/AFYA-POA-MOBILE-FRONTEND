@@ -18,7 +18,7 @@ open class AfyaPoa : Application() {
     override fun onCreate() {
         super.onCreate()
         tokenManager = TokenManager(this)
-        val BASE_URL = "https://b38c9fd33202.ngrok-free.app/api/v1/"
+        val BASE_URL = "https://65a7-102-210-42-254.ngrok-free.app/api/v1/".trim()
 
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -29,11 +29,11 @@ open class AfyaPoa : Application() {
             .build()
 
         api = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create<AfyaPoaAPI>(AfyaPoaAPI::class.java)
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AfyaPoaAPI::class.java)
 
     }
 }

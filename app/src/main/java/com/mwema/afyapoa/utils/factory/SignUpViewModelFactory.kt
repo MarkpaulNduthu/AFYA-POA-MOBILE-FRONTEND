@@ -13,6 +13,6 @@ class SignUpViewModelFactory(
         if (modelClass.isAssignableFrom(SignUPViewModel::class.java)){
             return SignUPViewModel(apiImplementation) as T
         }
-        throw Exception("Factory: Invalid class")
+        throw Exception("Error creating signup view model in factory")
     }
 }

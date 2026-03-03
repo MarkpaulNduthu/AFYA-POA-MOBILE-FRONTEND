@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mwema.afyapoa.data.ApiImplementation
 import com.mwema.afyapoa.data.model.AuthenticationRequest
+import com.mwema.afyapoa.data.model.LoginAuthenticationRequest
 import com.mwema.afyapoa.utils.UIEvent
 import com.mwema.afyapoa.utils.UIEvent.Navigate
 import kotlinx.coroutines.channels.Channel
@@ -43,7 +44,7 @@ class LoginScreenViewModel(
                 viewModelScope.launch {
                     _uiState.value = LoginUIState(isLoading = true)
                     val authResponse = apiImplementation.login(
-                        AuthenticationRequest(
+                        LoginAuthenticationRequest(
                             registrationNumber,
                             password
                         )

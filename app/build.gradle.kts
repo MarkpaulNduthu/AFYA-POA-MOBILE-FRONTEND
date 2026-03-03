@@ -72,5 +72,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.security.crypto)
-
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.coil)
+    implementation(libs.coil3.coil.network.okhttp)
+    implementation(libs.coil.compose)
 }

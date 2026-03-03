@@ -37,6 +37,7 @@ import com.mwema.afyapoa.ui.login.validate
 import com.mwema.afyapoa.utils.Routes
 import com.mwema.afyapoa.utils.UIEvent
 import com.mwema.afyapoa.utils.factory.SignUpViewModelFactory
+import kotlin.math.sign
 
 @Composable
 fun SignUPScreen(
@@ -49,6 +50,7 @@ fun SignUPScreen(
     )
     val registrationNumber = signUPViewModel.registrationNumber
     val password = signUPViewModel.password
+    val email = signUPViewModel.email
     var error = signUPViewModel.error
     val uiState by signUPViewModel.screenState
 
@@ -90,6 +92,31 @@ fun SignUPScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = {
+                        signUPViewModel.updateEmail(it)
+//                            .also {
+//                            signUPViewModel.updateError(validate(registrationNumber, password))
+//                        }
+                    },
+                    placeholder = {
+                        Text(text = "Enter your Email")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(),
+//                    isError = error.containsKey("registrationNumber"),
+                    maxLines = 1,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        errorContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        errorTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        errorBorderColor= Color.Red,
+                    )
+                )
                 OutlinedTextField(
                     value = registrationNumber,
                     onValueChange = {

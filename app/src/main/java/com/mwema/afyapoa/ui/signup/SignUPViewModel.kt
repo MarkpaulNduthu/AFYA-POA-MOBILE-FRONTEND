@@ -21,6 +21,8 @@ class SignUPViewModel(
 
     var registrationNumber by mutableStateOf("")
         private set
+    var email by mutableStateOf("")
+        private set
     var password by mutableStateOf("")
         private set
     var error by mutableStateOf<Map<String, String>>(emptyMap())
@@ -36,6 +38,9 @@ class SignUPViewModel(
     fun updatePassword(password: String) {
         this.password = password
     }
+    fun updateEmail(email: String){
+        this.email = email
+    }
 
     fun updateError(error: Map<String, String>) {
         this.error = error
@@ -50,6 +55,7 @@ class SignUPViewModel(
                         val result = apiImplementation.register(
                             AuthenticationRequest(
                                 registrationNumber,
+                                email,
                                 password
                             )
                         )
