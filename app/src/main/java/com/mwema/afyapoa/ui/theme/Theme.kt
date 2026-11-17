@@ -16,6 +16,7 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Color.White,
     secondary = darkGrey100,
     tertiary = lighterBlue70,
+    surface = Color.Black,
     onSurface = Color.White,
     surfaceVariant = InputBackground,   // used by inputs
     onSurfaceVariant = InputText,       // text inside inputs
@@ -27,7 +28,9 @@ private val LightColorScheme = lightColorScheme(
     primary = lightBlue2,
     secondary = PurpleGrey40,
     tertiary = Pink40,
-    onSurface = Color.Black
+    onSurface = Color.Black,
+    surface = Color.White,
+
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),

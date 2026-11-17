@@ -8,10 +8,14 @@ import android.util.Log
 import com.mwema.afyapoa.data.model.AuthenticationRequest
 import com.mwema.afyapoa.data.model.LoadProfileResponse
 import com.mwema.afyapoa.data.model.LoginAuthenticationRequest
+import com.mwema.afyapoa.data.model.MedicalInfoRequest
+import com.mwema.afyapoa.data.model.MedicalInfoResponse
 import com.mwema.afyapoa.data.model.UpdateProfileResponse
 import com.mwema.afyapoa.data.network.AfyaPoaAPI
 import com.mwema.afyapoa.data.network.TokenManager
+import com.mwema.afyapoa.ui.settings.profileInfo.MedicalInfoState
 import com.mwema.afyapoa.utils.toFile
+import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -96,5 +100,20 @@ class ApiImplementation(
             return Result.success(response.body()!!)
         }
         return Result.failure(Exception("Failed to fetch profile"))
+    }
+
+    override suspend fun saveMedicalInfo(state: StateFlow<MedicalInfoState>): Result<MedicalInfoResponse> {
+        val medicalInfo = MedicalInfoRequest(
+            bloodType = state.value.bloodType,
+            allergies = state.value.allergies,
+            chronicConditions = state.value.chronicConditions,
+            emergencyContacts = state.value.contacts,
+        )
+        val response = afyaPoaAPI.saveMedicalInfo(medicalInfo)
+        return if (response.isSuccessful && response.body() != null) {
+            Result.success(response.body()!!)
+        } else {
+            Result.failure(Exception("Failed to save medical Information"))
+        }
     }
 }

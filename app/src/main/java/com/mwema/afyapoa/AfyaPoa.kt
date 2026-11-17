@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 open class AfyaPoa : Application() {
     lateinit var tokenManager: TokenManager
@@ -18,7 +19,7 @@ open class AfyaPoa : Application() {
     override fun onCreate() {
         super.onCreate()
         tokenManager = TokenManager(this)
-        val BASE_URL = "https://65a7-102-210-42-254.ngrok-free.app/api/v1/".trim()
+        val BASE_URL = "https://9cb5-102-210-42-254.ngrok-free.app/api/v1/".trim()
 
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -26,6 +27,9 @@ open class AfyaPoa : Application() {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(AuthAPIInterceptor(tokenManager))
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
         api = Retrofit.Builder()

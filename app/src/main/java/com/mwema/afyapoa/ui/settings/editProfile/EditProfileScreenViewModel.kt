@@ -22,25 +22,31 @@ class EditProfileScreenViewModel(
 
     fun updateProfile(context: Context, userName: String, imageUrl: Uri) {
         viewModelScope.launch {
-            uiState = uiState.copy(isUpdating = true)
-            val response = apiImplementation.updateProfile(context, imageUrl, userName)
-            response.fold(
-                onSuccess = { result ->
-                    uiState = uiState.copy(
-                        isUpdating = false,
-                        success = true
-                    )
-                    currentUserName = result.userName
-                    profileImageUrl = result.imageUrl
-                },
-                onFailure = { throwable ->
-                    uiState = uiState.copy(
-                        isUpdating = false,
-                        success = false,
-                        error = throwable.message
-                    )
-                }
-            )
+            try {
+                uiState = uiState.copy(isUpdating = true)
+                val response = apiImplementation.updateProfile(context, imageUrl, userName)
+                response.fold(
+                    onSuccess = { result ->
+                        uiState = uiState.copy(
+                            isUpdating = false,
+                            success = true
+                        )
+                        currentUserName = result.userName
+                        profileImageUrl = result.imageUrl
+                    },
+                    onFailure = { throwable ->
+                        uiState = uiState.copy(
+                            isUpdating = false,
+                            success = false,
+                            error = throwable.message
+                        )
+                    }
+                )
+            } catch (e: Exception) {
+                uiState = uiState.copy(
+                    error = "${e.message}"
+                )
+            }
         }
     }
 

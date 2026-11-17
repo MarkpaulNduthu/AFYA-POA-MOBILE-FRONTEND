@@ -15,9 +15,12 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +37,9 @@ import com.mwema.afyapoa.ui.records.RecordsScreen
 import com.mwema.afyapoa.ui.settings.SettingsScreen
 import com.mwema.afyapoa.ui.settings.editProfile.EditProfileScreen
 import com.mwema.afyapoa.ui.settings.editProfile.EditProfileScreenViewModel
+import com.mwema.afyapoa.ui.settings.profileInfo.MedicalInfoEvent
+import com.mwema.afyapoa.ui.settings.profileInfo.MedicalInfoScreen
+import com.mwema.afyapoa.ui.settings.profileInfo.MedicalInfoState
 import com.mwema.afyapoa.utils.Routes
 import com.mwema.afyapoa.utils.factory.EditProfileViewModelFactory
 
@@ -50,7 +56,7 @@ fun MainScreen(
             ApiImplementation(application.api, application.tokenManager)
         )
     )
-
+    val snackBarHostState = remember{ SnackbarHostState() }
     val bottomNavItems = listOf(
         BottomNavItem(
             name = "Home",
@@ -118,7 +124,8 @@ fun MainScreen(
                     )
                 }
             }
-        }
+        },
+        snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -137,7 +144,9 @@ fun MainScreen(
                     modifier = Modifier
                         .padding(innerPadding),
                     onThemeToggle = {},
-                    onMedicalInfo = {},
+                    onMedicalInfo = {
+                        navController.navigate(Routes.MEDICALINFO)
+                    },
                     onSecurity = {},
                     onLogout = {
                         application.tokenManager.clear()
@@ -149,9 +158,16 @@ fun MainScreen(
             }
             composable(Routes.EDITPROFILE) {
                 EditProfileScreen(
-                    modifier = Modifier,
+                    modifier = Modifier.padding(innerPadding),
                     editProfileViewModel
                 )
+            }
+            composable(Routes.MEDICALINFO) {
+                MedicalInfoScreen(
+                    modifier = Modifier.padding(innerPadding)
+                ){
+                    navController.navigate(it)
+                }
             }
         }
     }

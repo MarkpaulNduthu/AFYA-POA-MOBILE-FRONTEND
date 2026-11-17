@@ -4,6 +4,8 @@ import com.mwema.afyapoa.data.model.AuthenticationRequest
 import com.mwema.afyapoa.data.model.AuthenticationResponse
 import com.mwema.afyapoa.data.model.LoadProfileResponse
 import com.mwema.afyapoa.data.model.LoginAuthenticationRequest
+import com.mwema.afyapoa.data.model.MedicalInfoRequest
+import com.mwema.afyapoa.data.model.MedicalInfoResponse
 import com.mwema.afyapoa.data.model.UpdateProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,4 +33,7 @@ interface AfyaPoaAPI {
 
     @GET("profiles/student-profile")
     suspend fun loadProfile(): Response<LoadProfileResponse>
+
+    @POST("profiles/create")
+    suspend fun saveMedicalInfo(@Body profile: MedicalInfoRequest): Response<MedicalInfoResponse>
 }

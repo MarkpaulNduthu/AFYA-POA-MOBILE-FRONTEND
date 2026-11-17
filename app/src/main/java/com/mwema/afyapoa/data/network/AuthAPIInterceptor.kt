@@ -8,7 +8,7 @@ class AuthAPIInterceptor(
 ) : Interceptor{
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = tokenManager.getToken()
-
+        println("TOKEN FROM MANAGER $token")
         val response = if (token != null){
             chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")

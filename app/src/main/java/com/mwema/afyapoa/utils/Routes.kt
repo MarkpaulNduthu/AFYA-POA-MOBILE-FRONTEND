@@ -10,4 +10,5 @@ object Routes {
     const val RECORDS: String = "records"
     const val EDITPROFILE: String = "editprofile"
     const val ABOUT: String = "about"
+    const val MEDICALINFO: String = "medicalInfo"
 }
